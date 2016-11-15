@@ -22,21 +22,23 @@ class GamesTableViewController: UITableViewController {
         tableView.dataSource = nil
         tableView.delegate = nil
         
-        games.asObservable().bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType : UITableViewCell.cell)) { (index :  Int, board : Board, cell : UITableViewCell) in
+        games.asObservable().bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType : UITableViewCell.self)) { (index :  Int, board : Board, cell : UITableViewCell) in
             if let winner = board.winner(){
                 cell.textLabel?.text = "The winner is: \(winner.rawValue)"
             }
             else{
-                cell.textLabel?.text = "The current turn is: \(board.currentTurn().rawValue)"
+                cell.textLabel?.text = "The current turn is: \(board.playerWithCurrentTurn().rawValue)"
             }
             }.addDisposableTo(disposeBag)
     }
     
     
-    
-    
-    override func performSegue(withIdentifier identifier: String, sender: Any?) {
-        let destinationController =
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationController = segue.destination as? ViewController{
+            destinationController.addBoard = { (board: Board) in
+                self.games.value.append(board)
+            }
+        }
     }
     
 

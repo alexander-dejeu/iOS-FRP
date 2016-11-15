@@ -20,7 +20,7 @@ class ViewController: UIViewController, BoardViewDelegate {
     
     private var disposeBag = DisposeBag()
     
-//    var addBoard : (Board) -> ()
+    var addBoard : ((Board) -> ())? = nil
     
     
     // MARK: View controller lifecycle
@@ -61,6 +61,7 @@ class ViewController: UIViewController, BoardViewDelegate {
     }
     
     @IBAction func restartButtonPressed(_ sender: AnyObject) {
+        addBoard!(board.value)
         board.value = Board()
         turnInfoLabel.text = "Current turn:"
         boardView.resetAllFieldsToEmpty()
@@ -69,6 +70,7 @@ class ViewController: UIViewController, BoardViewDelegate {
     }
     
     @IBAction func DismissButtonPressed(_ sender: AnyObject) {
+        addBoard!(board.value)
         self.dismiss(animated: true, completion: nil)
     }
     

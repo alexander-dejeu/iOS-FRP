@@ -18,6 +18,7 @@
 		55CE6E751DA557440095A0CF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CE6E741DA557440095A0CF /* Player.swift */; };
 		55CE6E771DA557510095A0CF /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CE6E761DA557510095A0CF /* Field.swift */; };
 		55CE6E791DA557C60095A0CF /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CE6E781DA557C60095A0CF /* Board.swift */; };
+		FAAE28291DDB9CF800C30665 /* GamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE28281DDB9CF800C30665 /* GamesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		55CE6E781DA557C60095A0CF /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Model/Board.swift; sourceTree = "<group>"; };
 		64FCB1FED9D5FD13FB8470B8 /* Pods-TicTacToe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.debug.xcconfig"; sourceTree = "<group>"; };
 		E1D57739215A91385D214030 /* Pods-TicTacToe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.release.xcconfig"; sourceTree = "<group>"; };
+		FAAE28281DDB9CF800C30665 /* GamesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				559526FB1DA4A79D0052F944 /* Assets.xcassets */,
 				559526FD1DA4A79D0052F944 /* LaunchScreen.storyboard */,
 				559527001DA4A79D0052F944 /* Info.plist */,
+				FAAE28281DDB9CF800C30665 /* GamesTableViewController.swift */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -217,7 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E8F7F53A6E107304A7E9431A /* [CP] Copy Pods Resources */ = {
@@ -247,6 +250,7 @@
 				559526F51DA4A79D0052F944 /* AppDelegate.swift in Sources */,
 				55CE6E751DA557440095A0CF /* Player.swift in Sources */,
 				55CE6E791DA557C60095A0CF /* Board.swift in Sources */,
+				FAAE28291DDB9CF800C30665 /* GamesTableViewController.swift in Sources */,
 				55CE6E771DA557510095A0CF /* Field.swift in Sources */,
 				55CE6E731DA552E70095A0CF /* FieldView.swift in Sources */,
 			);

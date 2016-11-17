@@ -15,11 +15,32 @@ class RxOpenWeatherMapAPI {
   // MARK: Public API
   
   func createWeatherObservable(for city: String, temperatureUnit: RxOpenWeatherMapAPI.TemperatureUnit = .fahrenheit) -> Observable<Weather?> {
-    return Observable<Weather?>.just(nil) // just make the compiler happy by creating a default Observable that's always nil
+    guard let url = buildURLForCurrentWeather(for: city, temperatureUnit: temperatureUnit)
+        else{
+            print(#function, "invalid URL")
+            return Observable<Weather?>.just(nil)
+    }
+    
+    let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
+    
+    let weatherInfoObservable : Observable<[String: Any]> = jsonObservable.map { (json: Any) in
+        return (json as? [String: Any])!
+    }
+    
+    let weatherObservable : Observable<Weather?> = weatherInfoObservable.map { (weatherInfo : [String: Any]?) in
+        guard let weather = weatherInfo
+            else{
+                print(#function, "There is no data")
+                return nil
+            }
+        return self.jsonToMaybeWeather(weatherInfo: weather)
+    }
+    
+    return weatherObservable.observeOn(MainScheduler.instance).catchErrorJustReturn(nil)
   }
 
   
-  // MARK: Build URLS
+  // MARK: Build URL
   
   fileprivate func buildURLForCurrentWeather(for city: String, temperatureUnit: RxOpenWeatherMapAPI.TemperatureUnit) -> URL? {
     let path = RxOpenWeatherMapAPI.Endpoint.weather.rawValue
@@ -102,7 +123,7 @@ class RxOpenWeatherMapAPI {
   
   // MARK: Types & Constants
   
-  let apiKey = ""
+  let apiKey = "70656a802c2155ca1968b5e0b88f9791"
 
   fileprivate let baseURL = "http://api.openweathermap.org/data/2.5"
   

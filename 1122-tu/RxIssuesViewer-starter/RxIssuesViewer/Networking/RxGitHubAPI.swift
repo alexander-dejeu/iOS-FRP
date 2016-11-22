@@ -11,8 +11,8 @@ import Foundation
 
 class RxGitHubAPI {
   
-  static private let clientID = ""
-  static private let clientSecret = ""
+  static private let clientID = "b5ddb1d98aa21662a427"
+  static private let clientSecret = "707c85532d2510d8c071dff60b3d04768edb4fd4"
   static private var userAccessToken = ""
   
   let baseURL = "https://api.github.com"

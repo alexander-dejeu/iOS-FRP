@@ -10,9 +10,12 @@ import UIKit
 
 class SearchGithubViewController: UIViewController {
 
+    let githubAPI = RxGitHubAPI()
+    
     // MARK: - Viewcontroller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        githubAPI.createUserObservable(for: "Alexander-Dejeu")
     }
 
    

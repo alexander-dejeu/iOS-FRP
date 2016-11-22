@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:])
         }
+        
     }
     
 }

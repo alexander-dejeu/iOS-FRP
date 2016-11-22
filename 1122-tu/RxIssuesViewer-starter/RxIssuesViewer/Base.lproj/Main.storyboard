@@ -32,18 +32,15 @@
                             <constraint firstItem="PDU-r4-VEN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Z4d-HW-1LU"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="mur-1F-oRx" kind="show" id="NIa-mT-x1v"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="38" y="134"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Repositories View Controller-->
         <scene sceneID="s9Q-zB-jQY">
             <objects>
-                <viewController id="Km8-A0-Dlm" sceneMemberID="viewController">
+                <viewController id="Km8-A0-Dlm" customClass="SearchRepositoriesViewController" customModule="RxIssuesViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Uw-Qd-Ru8"/>
                         <viewControllerLayoutGuide type="bottom" id="BOH-Jc-jFc"/>
@@ -82,10 +79,10 @@
             </objects>
             <point key="canvasLocation" x="2759" y="135"/>
         </scene>
-        <!--View Controller-->
+        <!--Project Issues View Controller-->
         <scene sceneID="Lym-Aq-tL8">
             <objects>
-                <viewController id="fik-Oy-e5X" sceneMemberID="viewController">
+                <viewController id="fik-Oy-e5X" customClass="ProjectIssuesViewController" customModule="RxIssuesViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HvQ-V3-bNs"/>
                         <viewControllerLayoutGuide type="bottom" id="2oI-ck-Xl6"/>
@@ -158,7 +155,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Sam-pA-QU8">
             <objects>
-                <navigationController id="mur-1F-oRx" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navigationController" id="mur-1F-oRx" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OOh-f8-48Z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -171,10 +168,10 @@
             </objects>
             <point key="canvasLocation" x="966" y="136"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Github View Controller-->
         <scene sceneID="BOj-2Q-XqL">
             <objects>
-                <viewController id="aEo-hL-iz3" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchGithub" id="aEo-hL-iz3" customClass="SearchGithubViewController" customModule="RxIssuesViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MiX-gb-MOy"/>
                         <viewControllerLayoutGuide type="bottom" id="SK6-Zm-BW8"/>

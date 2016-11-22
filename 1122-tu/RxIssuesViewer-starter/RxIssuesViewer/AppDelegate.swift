@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     print(#file.lastPathComponent()!, #line, #function, "received code: \(code)")
     RxGitHubAPI.authenticate(with: code)
+    
     return false
   }
 

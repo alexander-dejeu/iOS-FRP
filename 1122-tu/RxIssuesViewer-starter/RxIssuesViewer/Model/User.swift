@@ -9,8 +9,22 @@
 import Foundation
 
 struct User {
-  let identifier: Int
-  let login: String
-  let name: String
-  let email: String
+    let identifier: Int
+    let login: String
+    let name: String
+    let email: String
+    
+    let avatarURLString : String
+    let type: String
+    let publicRepoCount: Int
+    
+    init(identifier: Int, login: String, name: String, email: String, avatarURLString: String, type: String, publicRepoCount: Int){
+        self.identifier = identifier
+        self.login = login
+        self.name = name
+        self.email = email
+        self.avatarURLString = avatarURLString
+        self.type = type
+        self.publicRepoCount = publicRepoCount
+    }
 }

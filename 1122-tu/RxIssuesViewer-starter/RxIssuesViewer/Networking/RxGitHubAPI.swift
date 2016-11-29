@@ -142,48 +142,43 @@ class RxGitHubAPI {
     
     fileprivate func jsonToMaybeUser(userInfo: [String: Any]) -> User? {
         
-        guard let descriptionDataArray = userInfo["weather"] as? NSArray else {
-            print("could not get description data array")
+        guard let userInfoID = userInfo["id"] as? Int else {
+            print("could not get user name")
             return nil
         }
         
-        guard let descriptionData = descriptionDataArray[0] as? [String: Any] else {
-            print("could not get description data")
+        guard let userInfoLogin = userInfo["login"] as? String else {
+            print("could not get user login")
             return nil
         }
         
-        guard let description = descriptionData["description"] as? String else {
-            print("could not get description")
+        guard let userInfoUserName = userInfo["name"] as? String else {
+            print("could not get user name")
             return nil
         }
         
-        guard let dateSeconds = userInfo["dt"] as? Double else {
-            print("could not get date")
+//        guard let userInfoUserEmail = userInfo["email"] as? String else {
+//            print("could not get email")
+//            return nil
+//        }
+        
+        guard let userInfoUserAvatarURLString = userInfo["avatar_url"] as? String else {
+            print("could not get user avatar info")
             return nil
         }
         
-        guard let temperatureInfo = userInfo["main"] as? [String: Any] else {
-            print("could not get temperature info")
+        guard let userInfoUserType = userInfo["type"] as? String else {
+            print("could not get user type")
             return nil
         }
         
-        guard let min = temperatureInfo["temp_min"] as? Float else {
-            print("could not get min temperature")
+        guard let userInfoUserPublicRepoCount = userInfo["public_repos"] as? Int else {
+            print("could not get user public repo count")
             return nil
         }
         
-        guard let max = temperatureInfo["temp_max"] as? Float else {
-            print("could not get max temperature")
-            return nil
-        }
-        
-        guard let avg = temperatureInfo["temp"] as? Float else {
-            print("could not get avg temperature")
-            return nil
-        }
     
-        
-        return User(identifier: 2, login: "test", name: "test", email: "string")
+        return User(identifier: userInfoID, login: userInfoLogin, name: userInfoUserName, email: "", avatarURLString: userInfoUserAvatarURLString, type: userInfoUserType, publicRepoCount: userInfoUserPublicRepoCount)
     }
     
 }

@@ -258,7 +258,7 @@
                         <outlet property="searchResultNameLabel" destination="MjB-9i-Bfm" id="ybg-Ck-PCG"/>
                         <outlet property="seeRepositoriesButton" destination="6v3-T5-5jp" id="3EA-5z-rCi"/>
                         <outlet property="userInputTextField" destination="k3a-SF-Pjv" id="ra7-QE-yJD"/>
-                        <segue destination="Km8-A0-Dlm" kind="show" id="NR8-Pa-S4o"/>
+                        <segue destination="Km8-A0-Dlm" kind="show" identifier="SegueFromUserToRepos" id="NR8-Pa-S4o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nVn-K8-2Zv" userLabel="First Responder" sceneMemberID="firstResponder"/>

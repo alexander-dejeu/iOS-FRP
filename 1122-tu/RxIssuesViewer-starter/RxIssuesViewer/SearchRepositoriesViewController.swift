@@ -7,12 +7,24 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class SearchRepositoriesViewController: UIViewController {
 
+    var inputUser : User?
+    let githubAPI = RxGitHubAPI()
+    let disposeBag = DisposeBag()
+    var repos : [Repository] = []
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     // MARK: - Viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("HERE WE ARE")
+        var repoObservable = self.githubAPI.createRepositoryObservable(for: inputUser!)
+        
     }
     
 

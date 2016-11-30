@@ -181,6 +181,80 @@ class RxGitHubAPI {
         return User(identifier: userInfoID, login: userInfoLogin, name: userInfoUserName, email: "", avatarURLString: userInfoUserAvatarURLString, type: userInfoUserType, publicRepoCount: userInfoUserPublicRepoCount)
     }
     
+    
+    func createRepositoryObservable(for user: User) -> Observable<[Repository]> {
+        print("entered la function")
+        guard let url = url(for: .repos(user))
+            else{
+                print(#function, "invalid URL")
+                return Observable.just([])
+        }
+        
+        let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
+        print(jsonObservable)
+        let repositoryInfoObservable : Observable<[String: Any]> = jsonObservable.map { (json: Any) in
+            print(json)
+            return (json as? [String: Any])!
+        }
+        print(repositoryInfoObservable)
+        
+        
+        let repositoryObservable : Observable<[Repository]> = repositoryInfoObservable.map { (reposInfo : [String: Any]?) in
+            guard let repos = reposInfo
+                else{
+                    print(#function, "There is no data")
+                    return []
+            }
+            print(repos)
+            return self.jsonToMaybeRepos(reposInfo: repos)
+        }
+        
+        return repositoryObservable.observeOn(MainScheduler.instance).catchErrorJustReturn([])
+    }
+
+    
+    fileprivate func jsonToMaybeRepos(reposInfo: [String: Any]) -> [Repository] {
+        
+        var resultRepositories: [Repository] = []
+//        guard let userInfoID = userInfo["id"] as? Int else {
+//            print("could not get user name")
+//            return nil
+//        }
+//        
+//        guard let userInfoLogin = userInfo["login"] as? String else {
+//            print("could not get user login")
+//            return nil
+//        }
+//        
+//        guard let userInfoUserName = userInfo["name"] as? String else {
+//            print("could not get user name")
+//            return nil
+//        }
+//        
+//        //        guard let userInfoUserEmail = userInfo["email"] as? String else {
+//        //            print("could not get email")
+//        //            return nil
+//        //        }
+//        
+//        guard let userInfoUserAvatarURLString = userInfo["avatar_url"] as? String else {
+//            print("could not get user avatar info")
+//            return nil
+//        }
+//        
+//        guard let userInfoUserType = userInfo["type"] as? String else {
+//            print("could not get user type")
+//            return nil
+//        }
+//        
+//        guard let userInfoUserPublicRepoCount = userInfo["public_repos"] as? Int else {
+//            print("could not get user public repo count")
+//            return nil
+//        }
+        
+        
+        return resultRepositories
+    }
+
 }
 
 

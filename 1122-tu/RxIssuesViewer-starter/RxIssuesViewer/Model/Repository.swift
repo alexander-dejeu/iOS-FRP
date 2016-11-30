@@ -14,4 +14,3 @@ struct Repository {
   let name: String
   let fullName: String
 }
-// 👤👥

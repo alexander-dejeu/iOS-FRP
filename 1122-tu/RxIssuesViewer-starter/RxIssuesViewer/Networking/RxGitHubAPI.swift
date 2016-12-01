@@ -137,7 +137,7 @@ class RxGitHubAPI {
         
         return userObservable.observeOn(MainScheduler.instance).catchErrorJustReturn(nil)
     }
-
+    
     // MARK: Parsing
     
     fileprivate func jsonToMaybeUser(userInfo: [String: Any]) -> User? {
@@ -157,10 +157,10 @@ class RxGitHubAPI {
             return nil
         }
         
-//        guard let userInfoUserEmail = userInfo["email"] as? String else {
-//            print("could not get email")
-//            return nil
-//        }
+        //        guard let userInfoUserEmail = userInfo["email"] as? String else {
+        //            print("could not get email")
+        //            return nil
+        //        }
         
         guard let userInfoUserAvatarURLString = userInfo["avatar_url"] as? String else {
             print("could not get user avatar info")
@@ -177,7 +177,7 @@ class RxGitHubAPI {
             return nil
         }
         
-    
+        
         return User(identifier: userInfoID, login: userInfoLogin, name: userInfoUserName, email: "", avatarURLString: userInfoUserAvatarURLString, type: userInfoUserType, publicRepoCount: userInfoUserPublicRepoCount)
     }
     
@@ -192,14 +192,19 @@ class RxGitHubAPI {
         
         let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
         print(jsonObservable)
-        let repositoryInfoObservable : Observable<[String: Any]> = jsonObservable.map { (json: Any) in
+        let repositoryInfoObservable : Observable<[Any]> = jsonObservable.map { (json: Any) in
             print(json)
-            return (json as? [String: Any])!
+            guard let json = json as? [Any]
+                else{
+                    print(#function, "Bad Json")
+                    return []
+            }
+            return json
         }
         print(repositoryInfoObservable)
         
         
-        let repositoryObservable : Observable<[Repository]> = repositoryInfoObservable.map { (reposInfo : [String: Any]?) in
+        let repositoryObservable : Observable<[Repository]> = repositoryInfoObservable.map { (reposInfo : [Any]?) in
             guard let repos = reposInfo
                 else{
                     print(#function, "There is no data")
@@ -211,50 +216,52 @@ class RxGitHubAPI {
         
         return repositoryObservable.observeOn(MainScheduler.instance).catchErrorJustReturn([])
     }
-
     
-    fileprivate func jsonToMaybeRepos(reposInfo: [String: Any]) -> [Repository] {
+    
+    fileprivate func jsonToMaybeRepos(reposInfo: [Any]) -> [Repository] {
         
         var resultRepositories: [Repository] = []
-//        guard let userInfoID = userInfo["id"] as? Int else {
-//            print("could not get user name")
-//            return nil
-//        }
-//        
-//        guard let userInfoLogin = userInfo["login"] as? String else {
-//            print("could not get user login")
-//            return nil
-//        }
-//        
-//        guard let userInfoUserName = userInfo["name"] as? String else {
-//            print("could not get user name")
-//            return nil
-//        }
-//        
-//        //        guard let userInfoUserEmail = userInfo["email"] as? String else {
-//        //            print("could not get email")
-//        //            return nil
-//        //        }
-//        
-//        guard let userInfoUserAvatarURLString = userInfo["avatar_url"] as? String else {
-//            print("could not get user avatar info")
-//            return nil
-//        }
-//        
-//        guard let userInfoUserType = userInfo["type"] as? String else {
-//            print("could not get user type")
-//            return nil
-//        }
-//        
-//        guard let userInfoUserPublicRepoCount = userInfo["public_repos"] as? Int else {
-//            print("could not get user public repo count")
-//            return nil
-//        }
         
+        for i in 0..<reposInfo.count{
+            guard let data : [String: Any] = reposInfo[i] as! [String: Any]
+                else{
+                    print(#function, "Bad data at index \(i) skipping data")
+                    continue
+            }
+            print("We are at index \(i) here is the data: \(data)")
+            
+            //            self.identifier = identifier
+            //            self.language = language
+            //            self.name = name
+            //            self.fullName = fullName
+            
+            guard let repoID = data["id"] as? Int else {
+                print("could not get repo identifier")
+                continue
+            }
+            
+            guard let repoLanguage = data["language"] as? String else {
+                print("could not get repo language")
+                continue
+            }
+            
+            guard let repoName = data["name"] as? String else {
+                print("could not get repo name")
+                continue
+            }
+            guard let repoFullName = data["full_name"] as? String else {
+                print("could not get repo fullName")
+                continue
+            }
+            
+            let newRepo = Repository(identifier: repoID, language: repoLanguage, name: repoName, fullName: repoFullName)
+            resultRepositories.append(newRepo)
+            
+        }
         
         return resultRepositories
     }
-
+    
 }
 
 

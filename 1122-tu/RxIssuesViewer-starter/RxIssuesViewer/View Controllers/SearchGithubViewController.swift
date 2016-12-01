@@ -42,14 +42,6 @@ class SearchGithubViewController: UIViewController {
         }
         
         
-        
-//        maybeUserObservable.map{ (user: User?) in
-//            if let user = user{
-//                print("new user")
-//                self.inputUser = user
-//            }
-//        }
-        
         maybeUserObservable.subscribe(onNext: setUser).addDisposableTo(disposeBag)
         
         maybeUserObservable.map { (user: User?) in

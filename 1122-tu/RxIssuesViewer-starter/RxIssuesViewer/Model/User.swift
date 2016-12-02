@@ -9,15 +9,18 @@
 import Foundation
 
 struct User {
+    
+    // MARK - Properties
     let identifier: Int
     let login: String
     let name: String
     let email: String
-    
     let avatarURLString : String
     let type: String
     let publicRepoCount: Int
     
+    
+    // MARK - Init
     init(identifier: Int, login: String, name: String, email: String, avatarURLString: String, type: String, publicRepoCount: Int){
         self.identifier = identifier
         self.login = login

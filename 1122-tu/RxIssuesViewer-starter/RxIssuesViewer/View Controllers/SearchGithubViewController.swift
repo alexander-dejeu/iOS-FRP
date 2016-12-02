@@ -12,47 +12,49 @@ import RxCocoa
 
 class SearchGithubViewController: UIViewController {
     
+    // MARK - IBActions
     @IBAction func TappedOnSeeRepositories(sender:UIButton){
         performSegue(withIdentifier: "SegueFromUserToRepos", sender: nil)
     }
     
-    let githubAPI = RxGitHubAPI()
-    let disposeBag = DisposeBag()
-    var inputUser : User? = nil
     
+    // MARK - IBOutlets
     @IBOutlet weak var userInputTextField: UITextField!
     @IBOutlet weak var searchResultNameLabel: UILabel!
     @IBOutlet weak var resultTypeLabel: UILabel!
     @IBOutlet weak var respositoryResultCount: UILabel!
     @IBOutlet weak var seeRepositoriesButton: UIButton!
-    // MARK: - Viewcontroller Lifecycle
+    
+    
+    // MARK - Properties
+    let githubAPI = RxGitHubAPI()
+    let disposeBag = DisposeBag()
+    var inputUser : User? = nil
+    
+    
+    // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupObservables()
     }
     
-    func setUser(newUser: User?){
-        inputUser = newUser
-    }
     
+    // MARK: - RxSwift
     func setupObservables(){
+        
         let maybeUserObservable: Observable<User?> = userInputTextField.rx.text.asObservable().throttle(0.75, scheduler: MainScheduler.instance).flatMapLatest {
             (searchText: String?) in
             return self.githubAPI.createUserObservable(for: searchText!)
         }
         
-        
         maybeUserObservable.subscribe(onNext: setUser).addDisposableTo(disposeBag)
         
         maybeUserObservable.map { (user: User?) in
             if let user = user{
-//                self.inputUser = user
-                
                 return user.name
             }
             return ""
             }.bindTo(searchResultNameLabel.rx.text).addDisposableTo(disposeBag)
-        
         
         maybeUserObservable.map { (user: User?) in
             if let user = user{
@@ -79,7 +81,6 @@ class SearchGithubViewController: UIViewController {
             return ""
             }.bindTo(respositoryResultCount.rx.text).addDisposableTo(disposeBag)
         
-        
         // Disable results button
         maybeUserObservable.map{ (user: User?) in
             return user != nil
@@ -96,6 +97,15 @@ class SearchGithubViewController: UIViewController {
             return user == nil
             }.bindTo(respositoryResultCount.rx.isHidden).addDisposableTo(disposeBag)
     }
+    
+    
+    
+    //MARK: - Helpers
+    func setUser(newUser: User?){
+        inputUser = newUser
+    }
+    
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationController = segue.destination as? SearchRepositoriesViewController{

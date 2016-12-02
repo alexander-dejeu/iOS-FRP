@@ -14,6 +14,7 @@ import RxSwift
 
 class RxGitHubAPI {
     
+    // MARK: - Properties
     static private let clientID = "b5ddb1d98aa21662a427"
     static private let clientSecret = "707c85532d2510d8c071dff60b3d04768edb4fd4"
     static private var userAccessToken = ""
@@ -109,6 +110,7 @@ class RxGitHubAPI {
     
     
     // MARK: Helpers
+    // ************  USERS  ************
     func createUserObservable(for user: String) -> Observable<User?> {
         guard let url = url(for: .user(user))
             else{
@@ -157,11 +159,6 @@ class RxGitHubAPI {
             return nil
         }
         
-        //        guard let userInfoUserEmail = userInfo["email"] as? String else {
-        //            print("could not get email")
-        //            return nil
-        //        }
-        
         guard let userInfoUserAvatarURLString = userInfo["avatar_url"] as? String else {
             print("could not get user avatar info")
             return nil
@@ -181,7 +178,7 @@ class RxGitHubAPI {
         return User(identifier: userInfoID, login: userInfoLogin, name: userInfoUserName, email: "", avatarURLString: userInfoUserAvatarURLString, type: userInfoUserType, publicRepoCount: userInfoUserPublicRepoCount)
     }
     
-    
+    // ************  REPOSITORIES  ************
     func createRepositoryObservable(for user: User) -> Observable<[Repository]> {
         print("entered la function")
         guard let url = url(for: .repos(user))
@@ -216,7 +213,6 @@ class RxGitHubAPI {
         
         return repositoryObservable.observeOn(MainScheduler.instance).catchErrorJustReturn([])
     }
-    
     
     fileprivate func jsonToMaybeRepos(reposInfo: [Any]) -> [Repository] {
         
@@ -257,7 +253,7 @@ class RxGitHubAPI {
         return resultRepositories
     }
     
-    
+    // ************  ISSUES  ************
     func createIssueObservable(for user: User, repo: Repository) -> Observable<[Issue]> {
         guard let url = url(for: .issues(user, repo))
             else{
@@ -290,26 +286,6 @@ class RxGitHubAPI {
         }
         
         return issueObservable.observeOn(MainScheduler.instance).catchErrorJustReturn([])
-    }
-    
-    func jsonToUser(userJSON: [String: Any]) -> User?{
-        guard let userID = userJSON["id"] as? Int else {
-            print("could not get user id")
-            return nil
-        }
-        guard let userLogin = userJSON["login"] as? String else {
-            print("could not get user login")
-            return nil
-        }
-        guard let userAvatarURL = userJSON["avatar_url"] as? String else {
-            print("could not get user avatar")
-            return nil
-        }
-        guard let userType = userJSON["type"] as? String else {
-            print("could not get issue identifier")
-            return nil
-        }
-        return User(identifier: userID, login: userLogin, name: "", email: "", avatarURLString: userAvatarURL, type: userType, publicRepoCount: -1)
     }
     
     fileprivate func jsonToMaybeIssues(issuesInfo: [Any]) -> [Issue] {
@@ -365,6 +341,28 @@ class RxGitHubAPI {
         
         return resultIssues
     }
+    
+    // Helper
+    func jsonToUser(userJSON: [String: Any]) -> User?{
+        guard let userID = userJSON["id"] as? Int else {
+            print("could not get user id")
+            return nil
+        }
+        guard let userLogin = userJSON["login"] as? String else {
+            print("could not get user login")
+            return nil
+        }
+        guard let userAvatarURL = userJSON["avatar_url"] as? String else {
+            print("could not get user avatar")
+            return nil
+        }
+        guard let userType = userJSON["type"] as? String else {
+            print("could not get issue identifier")
+            return nil
+        }
+        return User(identifier: userID, login: userLogin, name: "", email: "", avatarURLString: userAvatarURL, type: userType, publicRepoCount: -1)
+    }
+
     
     
 }

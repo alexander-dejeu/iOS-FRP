@@ -12,16 +12,17 @@ import RxSwift
 
 class SearchRepositoriesViewController: UIViewController {
     
+    //MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    //MARK: - Properties
     var inputUser : User?
     let githubAPI = RxGitHubAPI()
     let disposeBag = DisposeBag()
     var repos : [Repository] = []
-
-    @IBOutlet weak var tableView: UITableView!
     
-    func setRepos(repos: [Repository]){
-        self.repos = repos
-    }
+    
     // MARK: - Viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +34,13 @@ class SearchRepositoriesViewController: UIViewController {
             }.addDisposableTo(disposeBag)
         
         repoObservable.subscribe(onNext: setRepos).addDisposableTo(disposeBag)
-//        tableView.rx.itemSelected
     }
     
     
+    //MARK: - Helpers
+    func setRepos(repos: [Repository]){
+        self.repos = repos
+    }
     
     
     // MARK: - Navigation

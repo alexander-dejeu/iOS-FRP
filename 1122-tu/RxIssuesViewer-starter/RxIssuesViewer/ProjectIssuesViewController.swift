@@ -11,15 +11,18 @@ import RxCocoa
 import RxSwift
 
 class ProjectIssuesViewController: UIViewController {
+    
+    //MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
 
+    //MARK: - Properties
     var inputRepo : Repository?
     var inputUser: User?
-    
     let githubAPI = RxGitHubAPI()
     let disposeBag = DisposeBag()
     var issues : [Issue] = []
     
-    @IBOutlet weak var tableView: UITableView!
     
     //MARK:  - Viewcontroller Lifecycle
     override func viewDidLoad() {

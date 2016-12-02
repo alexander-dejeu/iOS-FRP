@@ -10,16 +10,16 @@ import UIKit
 
 class IssuesCell: UITableViewCell {
 
+    // MARK - IBOutlets
     @IBOutlet weak var issueLabel: UILabel!
     @IBOutlet weak var whoSubmitedIssueLabel: UILabel!
+    @IBOutlet weak var issueStatusLabel: UILabel!
     @IBOutlet weak var whoSubmitedIssueAvatar: UIImageView!
     
-    @IBOutlet weak var issueStatusLabel: UILabel!
     
-    
+    // MARK - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

@@ -9,11 +9,15 @@
 import Foundation
 
 struct Repository {
+    
+    // MARK - Properties
     let identifier: Int
     let language: String
     let name: String
     let fullName: String
     
+    
+    // MARK - Init
     init(identifier: Int, language: String, name: String, fullName: String) {
         self.identifier = identifier
         self.language = language

@@ -13,6 +13,7 @@ class RepositoryCell: UITableViewCell {
     // MARK - IBOutlets
     @IBOutlet weak var repositoryTitleLabel: UILabel!
     
+    
     // MARK - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()

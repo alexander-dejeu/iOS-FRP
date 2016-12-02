@@ -230,11 +230,6 @@ class RxGitHubAPI {
             }
             print("We are at index \(i) here is the data: \(data)")
             
-            //            self.identifier = identifier
-            //            self.language = language
-            //            self.name = name
-            //            self.fullName = fullName
-            
             guard let repoID = data["id"] as? Int else {
                 print("could not get repo identifier")
                 continue
@@ -261,6 +256,116 @@ class RxGitHubAPI {
         
         return resultRepositories
     }
+    
+    
+    func createIssueObservable(for user: User, repo: Repository) -> Observable<[Issue]> {
+        guard let url = url(for: .issues(user, repo))
+            else{
+                print(#function, "invalid URL")
+                return Observable.just([])
+        }
+        
+        let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
+        print(jsonObservable)
+        let issueInfoObservable : Observable<[Any]> = jsonObservable.map { (json: Any) in
+            print(json)
+            guard let json = json as? [Any]
+                else{
+                    print(#function, "Bad Json")
+                    return []
+            }
+            return json
+        }
+        print(issueInfoObservable)
+        
+        
+        let issueObservable : Observable<[Issue]> = issueInfoObservable.map { (issueInfo : [Any]?) in
+            guard let issues = issueInfo
+                else{
+                    print(#function, "There is no data")
+                    return []
+            }
+            print(issues)
+            return self.jsonToMaybeIssues(issuesInfo: issues)
+        }
+        
+        return issueObservable.observeOn(MainScheduler.instance).catchErrorJustReturn([])
+    }
+    
+    func jsonToUser(userJSON: [String: Any]) -> User?{
+        guard let userID = userJSON["id"] as? Int else {
+            print("could not get user id")
+            return nil
+        }
+        guard let userLogin = userJSON["login"] as? String else {
+            print("could not get user login")
+            return nil
+        }
+        guard let userAvatarURL = userJSON["avatar_url"] as? String else {
+            print("could not get user avatar")
+            return nil
+        }
+        guard let userType = userJSON["type"] as? String else {
+            print("could not get issue identifier")
+            return nil
+        }
+        return User(identifier: userID, login: userLogin, name: "", email: "", avatarURLString: userAvatarURL, type: userType, publicRepoCount: -1)
+    }
+    
+    fileprivate func jsonToMaybeIssues(issuesInfo: [Any]) -> [Issue] {
+        
+        var resultIssues: [Issue] = []
+        
+        for i in 0..<issuesInfo.count{
+            guard let data : [String: Any] = issuesInfo[i] as! [String: Any]
+                else{
+                    print(#function, "Bad data at index \(i) skipping data")
+                    continue
+            }
+            print("We are at index \(i) here is the data: \(data)")
+            
+            guard let issueID = data["id"] as? Int else {
+                print("could not get issue identifier")
+                continue
+            }
+            
+            guard let issueTitle = data["title"] as? String else {
+                print("could not get issue title")
+                continue
+            }
+            guard let userJSON = data["user"] as? [String: Any] else {
+                print("could not get user JSON")
+                continue
+            }
+            
+            guard let issuePostedBy = jsonToUser(userJSON: userJSON) else {
+                print("could not convert json to user")
+                continue
+            }
+            
+            guard let issueOpen = data["state"] as? String else {
+                print("could not get repo fullName")
+                continue
+            }
+            guard let issueURL = data["url"] as? String else {
+                print("could not get issue url")
+                continue
+            }
+            
+            var openStatus = false
+            if issueOpen == "open" {
+                openStatus = true
+            }
+            
+            
+            let newIssue = Issue(identifier: issueID, title: issueTitle, postedBy: issuePostedBy, open: openStatus, url: issueURL)
+            resultIssues.append(newIssue)
+            
+        }
+        
+        return resultIssues
+    }
+    
     
 }
 

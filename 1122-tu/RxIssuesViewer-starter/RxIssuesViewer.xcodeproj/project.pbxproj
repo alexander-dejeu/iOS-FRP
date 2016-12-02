@@ -24,6 +24,7 @@
 		FA8D95171DE4D1ED007B6CD9 /* SearchGithubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D95161DE4D1ED007B6CD9 /* SearchGithubViewController.swift */; };
 		FA8D95191DE4D220007B6CD9 /* SearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D95181DE4D220007B6CD9 /* SearchRepositoriesViewController.swift */; };
 		FA8D951B1DE4D23D007B6CD9 /* ProjectIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D951A1DE4D23D007B6CD9 /* ProjectIssuesViewController.swift */; };
+		FAF9DBEE1DF0B33500004CAD /* IssuesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF9DBED1DF0B33500004CAD /* IssuesCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		FA8D95161DE4D1ED007B6CD9 /* SearchGithubViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchGithubViewController.swift; path = "View Controllers/SearchGithubViewController.swift"; sourceTree = "<group>"; };
 		FA8D95181DE4D220007B6CD9 /* SearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 		FA8D951A1DE4D23D007B6CD9 /* ProjectIssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectIssuesViewController.swift; sourceTree = "<group>"; };
+		FAF9DBED1DF0B33500004CAD /* IssuesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7F1AB91DEE59A2000213CD /* RepositoryCell.swift */,
+				FAF9DBED1DF0B33500004CAD /* IssuesCell.swift */,
 			);
 			path = "Custom UI Elements";
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8D95191DE4D220007B6CD9 /* SearchRepositoriesViewController.swift in Sources */,
+				FAF9DBEE1DF0B33500004CAD /* IssuesCell.swift in Sources */,
 				551AA31A1DE4B69400FE1895 /* Sequence+Util.swift in Sources */,
 				FA8D951B1DE4D23D007B6CD9 /* ProjectIssuesViewController.swift in Sources */,
 				551AA30A1DE3E54900FE1895 /* LoginViewController.swift in Sources */,

@@ -63,7 +63,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="If8-Om-4Hd" id="3Jg-Ic-zLx">
-                                            <frame key="frameInset" width="375" height="54.5"/>
+                                            <frame key="frameInset" width="375" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jox-SA-GQM">
@@ -80,6 +80,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="repositoryTitleLabel" destination="jox-SA-GQM" id="7hL-QH-zgw"/>
+                                            <segue destination="fik-Oy-e5X" kind="show" id="DKM-bu-xT7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -90,7 +91,6 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="7Nu-9V-7dU" id="TwM-bd-EpX"/>
                         <outlet property="tableView" destination="f0V-m5-c7s" id="hRC-Qz-Ddj"/>
-                        <segue destination="fik-Oy-e5X" kind="show" id="pVr-O4-mGK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="muC-d8-wCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -120,7 +120,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vlp-xC-cYr">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="SRz-db-UdI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IssuesCell" rowHeight="100" id="SRz-db-UdI" customClass="IssuesCell" customModule="RxIssuesViewer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SRz-db-UdI" id="qVY-Pe-pDP">
@@ -161,6 +161,12 @@
                                                 <constraint firstAttribute="trailing" secondItem="wiT-pj-V9d" secondAttribute="trailing" constant="5" id="x0y-aC-Kac"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="issueLabel" destination="6la-zS-Jmt" id="lVr-u3-nE0"/>
+                                            <outlet property="issueStatusLabel" destination="wiT-pj-V9d" id="26p-OS-RoV"/>
+                                            <outlet property="whoSubmitedIssueAvatar" destination="SYj-Sf-F8O" id="fJA-4F-u4U"/>
+                                            <outlet property="whoSubmitedIssueLabel" destination="sbz-PO-OK2" id="9cK-hU-OUb"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -173,6 +179,9 @@
                             <constraint firstItem="Vlp-xC-cYr" firstAttribute="top" secondItem="9gQ-QL-2Se" secondAttribute="top" id="jzy-O3-dgg"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Vlp-xC-cYr" id="f7F-9I-b5G"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N5b-y2-kga" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

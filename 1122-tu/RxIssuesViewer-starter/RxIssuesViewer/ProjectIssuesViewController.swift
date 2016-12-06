@@ -47,7 +47,11 @@ class ProjectIssuesViewController: UIViewController {
             cell.whoSubmitedIssueAvatar.downloadedFrom(link: issue.postedBy.avatarURLString)
             
             }.addDisposableTo(disposeBag)
+        
+        
     }
+    
+    
 
     // MARK: - Navigation
 

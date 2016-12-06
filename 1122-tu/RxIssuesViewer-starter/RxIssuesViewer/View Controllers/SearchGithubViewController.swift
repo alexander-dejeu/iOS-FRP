@@ -24,9 +24,7 @@ class SearchGithubViewController: UIViewController {
     let githubAPI = RxGitHubAPI()
     let disposeBag = DisposeBag()
     var user : Variable<User?> = Variable(nil)
-    /*
-  rather than creating `var inputUser : User? = nil` you could wrap the `User?` in a `Variable`, this would allow you to use `bindTo` as follows: `maybeUserObservable.bindTo(user)`; in these situations bindings are preferrable over regular subscriptions as they're more concise and expressive
- */
+
     
     // MARK - IBActions
     @IBAction func tappedOnSeeRepositories(sender:UIButton){

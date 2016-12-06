@@ -89,6 +89,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="dZY-Du-gD3" id="pdO-KC-QUw"/>
                         <outlet property="searchDisplayController" destination="7Nu-9V-7dU" id="TwM-bd-EpX"/>
                         <outlet property="tableView" destination="f0V-m5-c7s" id="hRC-Qz-Ddj"/>
                     </connections>

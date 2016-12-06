@@ -14,13 +14,16 @@ class SearchRepositoriesViewController: UIViewController {
     
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     
     //MARK: - Properties
     var inputUser : User?
     let githubAPI = RxGitHubAPI()
     let disposeBag = DisposeBag()
-    var repos : [Repository] = []
+    var repos : Variable<[Repository]> = Variable([])
+    var filteredRepos: Variable<[Repository]> = Variable([])
     
     
     // MARK: - Viewcontroller lifecycle
@@ -29,17 +32,50 @@ class SearchRepositoriesViewController: UIViewController {
         
         var repoObservable = self.githubAPI.createRepositoryObservable(for: inputUser!)
         
-        repoObservable.asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType : RepositoryCell.self)) { (index :  Int, repository: Repository, cell : RepositoryCell) in
+        //        repoObservable.asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType : RepositoryCell.self)) { (index :  Int, repository: Repository, cell : RepositoryCell) in
+        //            cell.repositoryTitleLabel.text = repository.fullName
+        //            }.addDisposableTo(disposeBag)
+        
+        repoObservable.subscribe(onNext: setRepo).addDisposableTo(disposeBag)
+        
+        let searchbarObservable: Observable<String?> = searchBar.rx.text.asObservable()
+        searchbarObservable.subscribe(onNext: filterRepos).addDisposableTo(disposeBag)
+    
+        filterRepos(prefix: nil)
+        
+        filteredRepos.asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType : RepositoryCell.self)) { (index :  Int, repository: Repository, cell : RepositoryCell) in
             cell.repositoryTitleLabel.text = repository.fullName
             }.addDisposableTo(disposeBag)
         
-        repoObservable.subscribe(onNext: setRepos).addDisposableTo(disposeBag)
+        
+        
+        
+        //        repoObservable.subscribe(onNext: setRepos).addDisposableTo(disposeBag)
     }
     
     
     //MARK: - Helpers
-    func setRepos(repos: [Repository]){
-        self.repos = repos
+    //    func setRepos(repos: [Repository]){
+    //        self.repos = repos
+    //    }
+    func filterRepos(prefix: String?){
+        self.filteredRepos.value = []
+        if prefix == nil {
+            self.filteredRepos.value = repos.value
+        }
+        else{
+            for repo in repos.value{
+                if repo.fullName.hasPrefix(prefix!){
+                    self.filteredRepos.value.append(repo)
+                }
+            }
+        }
+    }
+    
+    func setRepo(result: [Repository]){
+        self.repos.value = result
+        filterRepos(prefix: nil)
+        
     }
     
     
@@ -48,6 +84,6 @@ class SearchRepositoriesViewController: UIViewController {
         let issuesTableViewController = segue.destination as! ProjectIssuesViewController
         issuesTableViewController.inputUser = self.inputUser
         let selectedRow = tableView.indexPathForSelectedRow!.row
-        issuesTableViewController.inputRepo = repos[selectedRow]
+        issuesTableViewController.inputRepo = filteredRepos.value[selectedRow]
     }
 }

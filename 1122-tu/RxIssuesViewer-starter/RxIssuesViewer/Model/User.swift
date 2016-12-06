@@ -16,12 +16,12 @@ struct User {
     let name: String
     let email: String
     let avatarURLString : String
-    let type: String
+    let type: Type
     let publicRepoCount: Int
     
     
     // MARK - Init
-    init(identifier: Int, login: String, name: String, email: String, avatarURLString: String, type: String, publicRepoCount: Int){
+    init(identifier: Int, login: String, name: String, email: String, avatarURLString: String, type: Type, publicRepoCount: Int){
         self.identifier = identifier
         self.login = login
         self.name = name
@@ -30,4 +30,9 @@ struct User {
         self.type = type
         self.publicRepoCount = publicRepoCount
     }
+}
+
+enum Type : String{
+    case user = "User"
+    case organization = "Organization"
 }

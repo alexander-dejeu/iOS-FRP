@@ -264,7 +264,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6v3-T5-5jp">
                                 <state key="normal" title="See Repositories"/>
                                 <connections>
-                                    <action selector="TappedOnSeeRepositoriesWithSender:" destination="aEo-hL-iz3" eventType="touchUpInside" id="zkw-uM-vId"/>
+                                    <action selector="tappedOnSeeRepositoriesWithSender:" destination="aEo-hL-iz3" eventType="touchUpInside" id="788-yi-Kck"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="n9h-vu-keo"/>

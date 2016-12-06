@@ -169,13 +169,15 @@ class RxGitHubAPI {
             return nil
         }
         
+        var userType : Type = Type(rawValue: userInfoUserType)!
+        
         guard let userInfoUserPublicRepoCount = userInfo["public_repos"] as? Int else {
             print("could not get user public repo count")
             return nil
         }
         
         
-        return User(identifier: userInfoID, login: userInfoLogin, name: userInfoUserName, email: "", avatarURLString: userInfoUserAvatarURLString, type: userInfoUserType, publicRepoCount: userInfoUserPublicRepoCount)
+        return User(identifier: userInfoID, login: userInfoLogin, name: userInfoUserName, email: "", avatarURLString: userInfoUserAvatarURLString, type: userType, publicRepoCount: userInfoUserPublicRepoCount)
     }
     
     // ************  REPOSITORIES  ************
@@ -356,15 +358,13 @@ class RxGitHubAPI {
             print("could not get user avatar")
             return nil
         }
-        guard let userType = userJSON["type"] as? String else {
+        guard let userTypeString = userJSON["type"] as? String else {
             print("could not get issue identifier")
             return nil
         }
+        var userType : Type = Type(rawValue: userTypeString)!
         return User(identifier: userID, login: userLogin, name: "", email: "", avatarURLString: userAvatarURL, type: userType, publicRepoCount: -1)
     }
-
-    
-    
 }
 
 

@@ -11,13 +11,7 @@ import RxSwift
 import RxCocoa
 
 class SearchGithubViewController: UIViewController {
-    
-    // MARK - IBActions
-    @IBAction func TappedOnSeeRepositories(sender:UIButton){
-        performSegue(withIdentifier: "SegueFromUserToRepos", sender: nil)
-    }
-    
-    
+
     // MARK - IBOutlets
     @IBOutlet weak var userInputTextField: UITextField!
     @IBOutlet weak var searchResultNameLabel: UILabel!
@@ -29,7 +23,15 @@ class SearchGithubViewController: UIViewController {
     // MARK - Properties
     let githubAPI = RxGitHubAPI()
     let disposeBag = DisposeBag()
-    var inputUser : User? = nil
+    var user : Variable<User?> = Variable(nil)
+    /*
+  rather than creating `var inputUser : User? = nil` you could wrap the `User?` in a `Variable`, this would allow you to use `bindTo` as follows: `maybeUserObservable.bindTo(user)`; in these situations bindings are preferrable over regular subscriptions as they're more concise and expressive
+ */
+    
+    // MARK - IBActions
+    @IBAction func tappedOnSeeRepositories(sender:UIButton){
+        performSegue(withIdentifier: "SegueFromUserToRepos", sender: nil)
+    }
     
     
     // MARK: - ViewController Lifecycle
@@ -47,7 +49,8 @@ class SearchGithubViewController: UIViewController {
             return self.githubAPI.createUserObservable(for: searchText!)
         }
         
-        maybeUserObservable.subscribe(onNext: setUser).addDisposableTo(disposeBag)
+//        maybeUserObservable.subscribe(onNext: setUser).addDisposableTo(disposeBag)
+        maybeUserObservable.bindTo(user).addDisposableTo(disposeBag)
         
         maybeUserObservable.map { (user: User?) in
             if let user = user{
@@ -58,7 +61,7 @@ class SearchGithubViewController: UIViewController {
         
         maybeUserObservable.map { (user: User?) in
             if let user = user{
-                if user.type == "User"{
+                if user.type == .user{
                     return "👤"
                 }
                 return "👥"
@@ -99,17 +102,10 @@ class SearchGithubViewController: UIViewController {
     }
     
     
-    
-    //MARK: - Helpers
-    func setUser(newUser: User?){
-        inputUser = newUser
-    }
-    
-    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationController = segue.destination as? SearchRepositoriesViewController{
-            destinationController.inputUser = self.inputUser
+            destinationController.inputUser = self.user.value
         }
     }
 }

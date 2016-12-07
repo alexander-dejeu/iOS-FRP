@@ -31,11 +31,7 @@ class SearchRepositoriesViewController: UIViewController {
         super.viewDidLoad()
         
         var repoObservable = self.githubAPI.createRepositoryObservable(for: inputUser!)
-        
-        //        repoObservable.asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType : RepositoryCell.self)) { (index :  Int, repository: Repository, cell : RepositoryCell) in
-        //            cell.repositoryTitleLabel.text = repository.fullName
-        //            }.addDisposableTo(disposeBag)
-        
+    
         repoObservable.subscribe(onNext: setRepo).addDisposableTo(disposeBag)
         
         let searchbarObservable: Observable<String?> = searchBar.rx.text.asObservable()

@@ -42,18 +42,10 @@ class SearchRepositoriesViewController: UIViewController {
         filteredRepos.asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType : RepositoryCell.self)) { (index :  Int, repository: Repository, cell : RepositoryCell) in
             cell.repositoryTitleLabel.text = repository.fullName
             }.addDisposableTo(disposeBag)
-        
-        
-        
-        
-        //        repoObservable.subscribe(onNext: setRepos).addDisposableTo(disposeBag)
     }
     
     
     //MARK: - Helpers
-    //    func setRepos(repos: [Repository]){
-    //        self.repos = repos
-    //    }
     func filterRepos(prefix: String?){
         self.filteredRepos.value = []
         if prefix == nil {

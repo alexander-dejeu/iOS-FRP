@@ -21,8 +21,7 @@ class ProjectIssuesViewController: UIViewController {
     var inputUser: User?
     let githubAPI = RxGitHubAPI()
     let disposeBag = DisposeBag()
-    var issues : [Issue] = []
-    
+    var issues : Variable<[Issue]?> = Variable([])
     
     //MARK:  - Viewcontroller Lifecycle
     override func viewDidLoad() {
@@ -48,12 +47,18 @@ class ProjectIssuesViewController: UIViewController {
             
             }.addDisposableTo(disposeBag)
         
+        issueObservable.bindTo(issues).addDisposableTo(disposeBag)
         
+        tableView.rx.itemSelected.subscribe(onNext: openURL).addDisposableTo(disposeBag)
     }
     
     
-
-    // MARK: - Navigation
+    // MARK: - Helpers
+    func openURL(indexPath: IndexPath){
+        if let url = URL(string: (issues.value?[indexPath.row].url)!) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
 
 }
 

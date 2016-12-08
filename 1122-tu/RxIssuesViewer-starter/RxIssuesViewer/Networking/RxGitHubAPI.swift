@@ -325,7 +325,7 @@ class RxGitHubAPI {
                 print("could not get repo fullName")
                 continue
             }
-            guard let issueURL = data["url"] as? String else {
+            guard let issueURL = data["html_url"] as? String else {
                 print("could not get issue url")
                 continue
             }

@@ -119,13 +119,9 @@ class RxGitHubAPI {
         }
         
         let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
-        print(jsonObservable)
         let userInfoObservable : Observable<[String: Any]> = jsonObservable.map { (json: Any) in
-            print(json)
             return (json as? [String: Any])!
         }
-        print(userInfoObservable)
-        
         
         let userObservable : Observable<User?> = userInfoObservable.map { (userInfo : [String: Any]?) in
             guard let user = userInfo
@@ -133,7 +129,6 @@ class RxGitHubAPI {
                     print(#function, "There is no data")
                     return nil
             }
-            print(user)
             return self.jsonToMaybeUser(userInfo: user)
         }
         
@@ -182,7 +177,6 @@ class RxGitHubAPI {
     
     // ************  REPOSITORIES  ************
     func createRepositoryObservable(for user: User) -> Observable<[Repository]> {
-        print("entered la function")
         guard let url = url(for: .repos(user))
             else{
                 print(#function, "invalid URL")
@@ -190,9 +184,7 @@ class RxGitHubAPI {
         }
         
         let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
-        print(jsonObservable)
         let repositoryInfoObservable : Observable<[Any]> = jsonObservable.map { (json: Any) in
-            print(json)
             guard let json = json as? [Any]
                 else{
                     print(#function, "Bad Json")
@@ -200,8 +192,6 @@ class RxGitHubAPI {
             }
             return json
         }
-        print(repositoryInfoObservable)
-        
         
         let repositoryObservable : Observable<[Repository]> = repositoryInfoObservable.map { (reposInfo : [Any]?) in
             guard let repos = reposInfo
@@ -209,7 +199,6 @@ class RxGitHubAPI {
                     print(#function, "There is no data")
                     return []
             }
-            print(repos)
             return self.jsonToMaybeRepos(reposInfo: repos)
         }
         
@@ -226,7 +215,6 @@ class RxGitHubAPI {
                     print(#function, "Bad data at index \(i) skipping data")
                     continue
             }
-            print("We are at index \(i) here is the data: \(data)")
             
             guard let repoID = data["id"] as? Int else {
                 print("could not get repo identifier")
@@ -264,9 +252,7 @@ class RxGitHubAPI {
         }
         
         let jsonObservable : Observable<Any> = URLSession.shared.rx.json(url: url)
-        print(jsonObservable)
         let issueInfoObservable : Observable<[Any]> = jsonObservable.map { (json: Any) in
-            print(json)
             guard let json = json as? [Any]
                 else{
                     print(#function, "Bad Json")
@@ -274,8 +260,6 @@ class RxGitHubAPI {
             }
             return json
         }
-        print(issueInfoObservable)
-        
         
         let issueObservable : Observable<[Issue]> = issueInfoObservable.map { (issueInfo : [Any]?) in
             guard let issues = issueInfo
@@ -283,7 +267,6 @@ class RxGitHubAPI {
                     print(#function, "There is no data")
                     return []
             }
-            print(issues)
             return self.jsonToMaybeIssues(issuesInfo: issues)
         }
         
@@ -300,7 +283,6 @@ class RxGitHubAPI {
                     print(#function, "Bad data at index \(i) skipping data")
                     continue
             }
-            print("We are at index \(i) here is the data: \(data)")
             
             guard let issueID = data["id"] as? Int else {
                 print("could not get issue identifier")
